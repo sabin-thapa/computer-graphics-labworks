@@ -1,70 +1,88 @@
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
-import time
 
-window = 0
-width, height = 800,600
+def Bresenham_Algo(x_start, y_start, x_end, y_end):
+    dx = x_end - x_start
+    dy = y_end - y_start    
+    x = x_start
+    y = y_start
 
-def Bresenham_Algo(x1, y1, x2, y2):
-    dx = x2 - x1
-    dy = y2 - y1
+    if abs(dx) > abs(dy) and x_end < x_start:
+        dx, dy = -dx, -dy
+        x_end, x_start  = x_start, x_end
+        y_end, y_start = y_start, y_end 
 
-    i1 = 2*dy
-    i2 = 2*(dy-dx)
-    d = i1 - dx
+    elif abs(dx) <= abs(dy) and y_end <  y_start:
+        dy, dx = -dy, -dx
+        y_end, y_start = y_start, y_end
+        x_end, x_start = x_start, x_end
 
-    if (dx < 0):
-        x = x2
-        y = y2
-        x_end = x1
-
-    if (dx > 0):
-        x = x1
-        y = y1
-        x_end = x2
-        
-
-    if abs(dx) > abs(dy):
-        stepSize = abs(dx)
-    else:
-        stepSize = abs(dy)
-    
-    xinc = dx/stepSize
-    yinc = dy/stepSize
-
-    x = x1
-    y = y1
-    # print(x, y)
-
-    for _ in range(stepSize):
-        x += xinc
-        y += yinc
-        time.sleep(0.01)
-
-        glVertex2f(round(x), round(y))
-
-
-def lineBresenham():
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+    glPointSize(4.0) #Point Size
     glBegin(GL_POINTS)
-    glColor(1.0, 1.0, 0.0)
+    '''RGB COLOR'''
+    glColor3f(0.0,0.0,1.0)
+    '''Starting Point'''
+    glVertex2f(x, y)
 
-    Bresenham_Algo(50, 50, 350, 350)
-        
+    ''' Case: |slope| < 1'''
+    if abs(dx) > abs(dy):
+        #decision parameter
+        p = 2*dy-dx
+        for i in range(0, abs(dx)+1):
+            x+=1
+            if(p >= 0):
+                y = y+1 if y_start < y_end else y-1
+                glVertex2f(x, y)
+                p = p+2*dy-2*dx if y_start < y_end else p-2*dy-2*dx
+            else:
+                glVertex2f(x,y)
+                p = p+2*dy if y_start < y_end else p-2*dy
+        glEnd()
+
+    #Case: |slope| > 1
+    else:
+        p=2*dx-dy
+        for i in range(0, abs(dy)+1):
+            y+=1
+            if (p>=0):
+                x = x+1 if x_start < x_end else x-1
+                glVertex2f(x, y)
+                p = p+2*dx-2*dy if x_start < x_end else p-2*dx-2*dy
+            else:
+                glVertex2f(x, y)
+                p = p+2*dx if x_start < x_end else p-2*dx
+        glEnd()
+    
+    glFlush()
+
+def initialize():
+    glutInit()
+    glutInitDisplayMode(GLUT_RGBA)
+    glutInitWindowSize(600, 600)
+    glutInitWindowPosition(300, 300)
+    glutCreateWindow("Bresenham Line Drawing Algorithm")
+    glClearColor(1.0,1.0,1.0,0.0) 
+    gluOrtho2D(-100,100,-100,100)
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) #to clear everything drawn previously
+
+    #Axes
+    glColor3f(0.0,0.0,1.0)
+    glPointSize(1.0)
+    glBegin(GL_LINES)
+    glVertex2f(-100,0)
+    glVertex2f(100,0)
+    glVertex2f(0,100)
+    glVertex2f(0,-100)
     glEnd()
-    glutSwapBuffers()
 
-def main():
-    glutInit(sys.argv)
-    glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_ALPHA|GLUT_DEPTH)
-    glutInitWindowSize(width, height)
-    glutInitWindowPosition(0,0)
-    glutCreateWindow(b'DDA Line')
-    glClearColor(0.0, 0.0, 0.0, 0.0)
-    gluOrtho2D(0.0, 500.0, 0.0, 400.0)
-    glutDisplayFunc(lineBresenham)
-    glutIdleFunc(lineBresenham)
+
+if __name__ ==  "__main__":
+    start = input("Enter the start co-ordinates in the form x1 y1:").split(' ')
+    end = input("Enter the end co-ordinates in the form x2 y2:").split(' ')
+    x1,y1 = int(start[0]), int(start[1])
+    x2,y2 = int(end[0]), int(end[1])
+    initialize()
+    glutDisplayFunc(lambda: Bresenham_Algo(x1, y1, x2, y2))
+    glutIdleFunc(lambda: Bresenham_Algo(x1, y1, x2, y2))
     glutMainLoop()
-
-main()

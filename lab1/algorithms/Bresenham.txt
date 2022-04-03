@@ -1,0 +1,5 @@
+Input the two line endpoints and store the left endpoint in (x0, y0)
+Load (x0, y0) into the frame buffer i.e. plot the first point.
+Calculate the constants: dx, dy, 2dx, 2dy, 2dx-2dy, 2dy-2dx and obtain
+the starting value for the decision parameter as
+    p0 = 2dy-dx

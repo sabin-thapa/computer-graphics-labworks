@@ -1,0 +1,25 @@
+Input the two line end-points (x1, y1) and (x2, y2).
+Calculate:
+    dx = x2 - x1
+    dy = y2 - y1
+// Calculate number of steps to put pixel as:
+If |dx| > |dy| then
+    stepSize = |dx|
+Else
+    stepSize = |dy|
+// Calculate increment in x & y for each steps
+x_inc = dx / stepSize
+y_inc = dy / stepSize
+
+// Save initial points
+x = x1
+y = y1
+
+Plot pixel (x,y)
+
+Until stepSize do
+    x = x + x_inc
+    y = y + y_inc
+    Plot pixel (Round(x), Round(y)
+End
+
