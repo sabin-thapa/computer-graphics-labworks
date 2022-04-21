@@ -1,0 +1,5 @@
+1) Implement Ellipse drawing algorithm using Midpoint ellipse drawing algorithm
+2) Implement the following transformation using homogeneous coordinates a) Translation b) Rotation c) Scaling d) Reflection e) Shearing
+( You can consider any two-dimension object for the transformation)
+
+3)Simulate the windmill using rotation transformation

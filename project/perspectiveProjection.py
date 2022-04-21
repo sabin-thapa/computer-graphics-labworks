@@ -44,7 +44,10 @@ void main()
 # glfw callback functions
 def window_resize(window, width, height):
     glViewport(0, 0, width, height)
+
+    #Create perspectipe projection on resize
     projection = pyrr.matrix44.create_perspective_projection_matrix(45, width / height, 0.1, 100)
+    #Upload new projection matrix to the vertex shader
     glUniformMatrix4fv(proj_loc, 1, GL_FALSE, projection)
 
 # initializing glfw library
@@ -149,6 +152,8 @@ glEnable(GL_DEPTH_TEST)
 glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
+#Arguments : Field of view, aspect ratio of the window(width/height), near clipping plane, far clipping plane
+# Everything between near and far clipping planes will be visible
 projection = pyrr.matrix44.create_perspective_projection_matrix(45, 1280/720, 0.1, 100)
 translation = pyrr.matrix44.create_from_translation(pyrr.Vector3([0, 0, -3]))
 

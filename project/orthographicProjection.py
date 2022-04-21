@@ -68,7 +68,9 @@ glfw.set_window_size_callback(window, window_resize)
 # make the context current
 glfw.make_context_current(window)
 
-vertices = [-0.5, -0.5,  0.5, 0.0, 0.0,
+vertices = [
+            #Front
+            -0.5, -0.5,  0.5, 0.0, 0.0,
              0.5, -0.5,  0.5, 1.0, 0.0,
              0.5,  0.5,  0.5, 1.0, 1.0,
             -0.5,  0.5,  0.5, 0.0, 1.0,
@@ -98,11 +100,18 @@ vertices = [-0.5, -0.5,  0.5, 0.0, 0.0,
             -0.5, 0.5,  0.5, 1.0, 1.0,
              0.5, 0.5,  0.5, 0.0, 1.0]
 
-indices = [ 0,  1,  2,  2,  3,  0,
+indices = [ 
+            #Top
+            0,  1,  2,  2,  3,  0,
+            #Bottom
             4,  5,  6,  6,  7,  4,
+            #Front
             8,  9, 10, 10, 11,  8,
+            #Back
            12, 13, 14, 14, 15, 12,
+            #Left
            16, 17, 18, 18, 19, 16,
+            #Right
            20, 21, 22, 22, 23, 20]
 
 vertices = np.array(vertices, dtype=np.float32)
@@ -137,7 +146,7 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
 # load image
-image = Image.open("textures/crate.jpg")
+image = Image.open("textures/ku.jpg")
 image = image.transpose(Image.FLIP_TOP_BOTTOM)
 img_data = image.convert("RGBA").tobytes()
 # img_data = np.array(image.getdata(), np.uint8) # second way of getting the raw image data
