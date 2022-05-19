@@ -52,7 +52,7 @@ if not glfw.init():
     raise Exception("glfw can not be initialized!")
 
 # creating the window
-window = glfw.create_window(1280, 720, "My OpenGL window", None, None)
+window = glfw.create_window(1280, 720, "Orthographic Projection", None, None)
 
 # check if window was created
 if not window:
@@ -69,7 +69,6 @@ glfw.set_window_size_callback(window, window_resize)
 glfw.make_context_current(window)
 
 vertices = [
-            #Front
             -0.5, -0.5,  0.5, 0.0, 0.0,
              0.5, -0.5,  0.5, 1.0, 0.0,
              0.5,  0.5,  0.5, 1.0, 1.0,
@@ -153,7 +152,9 @@ img_data = image.convert("RGBA").tobytes()
 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data)
 
 glUseProgram(shader)
-glClearColor(0, 0.1, 0.1, 1)
+# glClearColor(0, 0.1, 0.1, 1)
+glClearColor(0, 0.3, 0.5, 1)
+
 glEnable(GL_DEPTH_TEST)
 glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -161,7 +162,7 @@ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 # projection = pyrr.matrix44.create_perspective_projection_matrix(45, 1280/720, 0.1, 100)
 projection = pyrr.matrix44.create_orthogonal_projection_matrix(0, 1280, 0, 720, -1000, 1000)
 translation = pyrr.matrix44.create_from_translation(pyrr.Vector3([400, 200, -3]))
-scale = pyrr.matrix44.create_from_scale(pyrr.Vector3([200, 200, 200]))
+scale = pyrr.matrix44.create_from_scale(pyrr.Vector3([300, 300, 300]))
 
 model_loc = glGetUniformLocation(shader, "model")
 proj_loc = glGetUniformLocation(shader, "projection")

@@ -140,14 +140,14 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
 # load image
-image = Image.open("textures/crate.jpg")
+image = Image.open("textures/kucc.jpg")
 image = image.transpose(Image.FLIP_TOP_BOTTOM)
 img_data = image.convert("RGBA").tobytes()
 # img_data = np.array(image.getdata(), np.uint8) # second way of getting the raw image data
 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data)
 
 glUseProgram(shader)
-glClearColor(0, 0.1, 0.1, 1)
+glClearColor(0, 0.3, 0.5, 1)
 glEnable(GL_DEPTH_TEST)
 glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
